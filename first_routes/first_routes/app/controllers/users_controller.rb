@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def index
-    render plain: "I'm in the index action!"
+    render json: User.all
   end
 
   def show
@@ -20,7 +20,6 @@ class UsersController < ApplicationController
   def update
     user = User.find_by(params[:id])
     user.update_attributes(user_params)
-    # (params[:id], email: params[:user][:email], name: params[:user][:name])
     render json: user
   end
 
@@ -30,7 +29,7 @@ class UsersController < ApplicationController
       @user.delete
       render json: @user
     else
-      render json: user.errors.full_messages
+      render json: @user.errors.full_messages
     end
   end
 
@@ -38,6 +37,6 @@ class UsersController < ApplicationController
 private
 
   def user_params
-    params.require(:user).permit(:name, :email)
+    params.require(:user).permit(:username)
   end
 end
